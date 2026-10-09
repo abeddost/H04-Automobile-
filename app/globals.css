@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design-Tokens – H04 Automobil
+   Anthrazit / warmes Weiß / Electric Blue
+------------------------------------------------------------------- */
+@theme {
+  --color-ink: #0e0f11;
+  --color-ink-2: #16181c;
+  --color-ink-3: #1f2228;
+  --color-paper: #f6f3ee;
+  --color-paper-2: #ece7df;
+  --color-mist: #a7a39c; /* Fließtext gedämpft auf Dunkel – 7.6:1 */
+  --color-stone: #5e5a54; /* Fließtext gedämpft auf Hell – 6.2:1 */
+  --color-electric: #2964f5; /* Flächen, Weiß darauf 5:1 */
+  --color-electric-hover: #1f50dc;
+  --color-electric-light: #7ea2ff; /* Akzenttext auf Dunkel */
+  --color-electric-deep: #2457e8; /* Akzenttext auf Hell */
+  --color-draft: #ffd166;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-settle: settle 2.4s var(--ease-out-soft) both;
+  --animate-pulse-ring: pulse-ring 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.9;
+    }
+    80%,
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  /* Langsames „Ankommen“ des Hero-Fotos – nur Transform, Text bleibt sofort sichtbar */
+  @keyframes settle {
+    from {
+      scale: 1.07;
+    }
+    to {
+      scale: 1;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-electric);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-electric);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* Container */
+@utility shell {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 3rem;
+  }
+}
+
+/* Editoriale Display-Typo: Archivo, leicht gestreckt */
+@utility display {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+
+  &::before {
+    content: "";
+    width: 1.75rem;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.9;
+  }
+}
+
+/* Großzügiger Sektionsrhythmus */
+@utility section-y {
+  padding-block: clamp(5rem, 11vw, 10rem);
+}
+
+/* ------------------------------------------------------------------
+   Zurückhaltende Scroll-Reveals (nur mit JS und ohne Reduced Motion)
+------------------------------------------------------------------- */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .reveal {
+    transition:
+      opacity 0.9s var(--ease-out-soft),
+      translate 0.9s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal:not(.is-visible) {
+    opacity: 0;
+    translate: 0 1.75rem;
+  }
+}
+
+/* Reduced Motion: alles Bewegte aus */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Platzhalter für fehlende Rechtsangaben */
+.missing {
+  background: var(--color-draft);
+  color: var(--color-ink);
+  padding: 0.05em 0.35em;
+  border-radius: 0.3em;
+  font-weight: 600;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Typografie der Rechtstexte */
+.legal {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-ink);
+
+  & h2 {
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: 1.6rem;
+    line-height: 1.15;
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgb(14 15 17 / 0.12);
+    scroll-margin-top: 6rem;
+  }
+  & h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  & h3 {
+    font-weight: 700;
+    margin-top: 2rem;
+  }
+  & p,
+  & ul,
+  & address {
+    margin-top: 1rem;
+    color: var(--color-stone);
+  }
+  & address {
+    font-style: normal;
+  }
+  & strong {
+    color: var(--color-ink);
+  }
+  & ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  & li + li {
+    margin-top: 0.4rem;
+  }
+  & a {
+    color: var(--color-electric-deep);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
