@@ -25,7 +25,7 @@ export const business = {
     international: "+49 178 8427418",
   },
   links: {
-    mobileDe: "https://home.mobile.de/4H0AUTOHAUS",
+    mobileDe: "https://home.mobile.de/H04AUTOMOBIL",
     googleProfile: "https://share.google/Uo5XGtugDCUxGaTYK",
     directions: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(fullAddress)}`,
     mapEmbed: `https://www.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`,
