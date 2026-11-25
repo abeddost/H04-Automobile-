@@ -1,3 +1,4 @@
+import DesignerCredit from "@/components/DesignerCredit";
 import Link from "next/link";
 import { business } from "@/lib/business";
 import { Wordmark } from "./Wordmark";
@@ -81,6 +82,7 @@ export function SiteFooter() {
         <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs text-mist sm:flex-row sm:justify-between">
           <p>© {business.name} · Wiesbaden · Mainz-Kastel</p>
           <p>Abbildungen sind Symbolbilder (Fotos: Unsplash).</p>
+          <DesignerCredit site="h04-automobile" className="self-start" />
         </div>
       </div>
     </footer>
